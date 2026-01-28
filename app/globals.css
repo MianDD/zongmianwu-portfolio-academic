@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #020617;
+  --bg-alt: #020617;
+  --fg: #e5e7eb;
+  --muted: #9ca3af;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+}
+
+a {
+  @apply text-accent hover:underline;
+}
+
+.section-heading {
+  @apply text-2xl md:text-3xl font-semibold tracking-tight mb-4;
+}
