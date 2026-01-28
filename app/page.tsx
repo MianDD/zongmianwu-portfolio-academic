@@ -1,152 +1,175 @@
 import Link from "next/link";
-import { Section } from "@/components/Section";
-import { ProjectCard } from "@/components/ProjectCard";
-import { Tag } from "@/components/Tag";
 
-export default function HomePage() {
+function Pill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.02)]">
+      {children}
+    </span>
+  );
+}
+
+function Tag({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-700">
+      {children}
+    </span>
+  );
+}
+
+function Card({
+  title,
+  subtitle,
+  meta,
+  bullets,
+  tags,
+  href,
+}: {
+  title: string;
+  subtitle: string;
+  meta?: string;
+  bullets: string[];
+  tags?: string[];
+  href?: string;
+}) {
+  const inner = (
+    <div className="group rounded-xl border border-slate-200 bg-white p-6 transition hover:-translate-y-[1px] hover:shadow-sm">
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <h3 className="text-base font-semibold text-slate-900 group-hover:text-[#0b1f3b] transition">
+            {title}
+          </h3>
+          <p className="mt-1 text-sm text-slate-600">{subtitle}</p>
+
+          {tags?.length ? (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {tags.map((t) => (
+                <Tag key={t}>{t}</Tag>
+              ))}
+            </div>
+          ) : null}
+        </div>
+
+        {meta ? (
+          <span className="shrink-0 text-xs text-slate-500">{meta}</span>
+        ) : null}
+      </div>
+
+      <ul className="mt-4 space-y-2 text-sm text-slate-700">
+        {bullets.map((b, i) => (
+          <li key={i} className="flex gap-2">
+            <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-slate-300" />
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  return href ? (
+    <Link
+      href={href}
+      className="block rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0b1f3b]/20"
+    >
+      {inner}
+    </Link>
+  ) : (
+    inner
+  );
+}
+
+export default function Home() {
   return (
     <div className="space-y-12">
-      <section className="grid gap-8 md:grid-cols-[1.4fr,1fr] items-start">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent mb-2">
-            MPhil Scientific Computing · Robotics · AI for Engineering
+      {/* HERO (single-column, academic) */}
+      <section className="rounded-2xl border border-slate-200 bg-slate-50 p-6 md:p-10">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold tracking-widest text-slate-500">
+            MPHIL SCIENTIFIC COMPUTING · ROBOTICS · AI FOR ENGINEERING
           </p>
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-slate-50 mb-3">
+
+          <h1 className="mt-3 text-4xl font-semibold text-slate-900 tracking-tight">
             Zongmian Wu
           </h1>
-          <p className="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl mb-3">
-            I am an MPhil candidate in Scientific Computing (High Performance
-            Computing stream) at the University of Cambridge, based at the
-            Cavendish Laboratory. My background is in Electronic and Electrical
-            Engineering from University College London, where I graduated in the
-            top 5% of my cohort. I work at the interface of robotics, scientific
-            computing, and AI-assisted engineering workflows.
+
+          <p className="mt-3 text-sm text-slate-600">
+            University of Cambridge · Cavendish Laboratory
           </p>
-          <p className="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl">
-            My recent work includes learning-based control for a hexapod
-            locomotion platform, programming-by-demonstration for manipulation,
-            robotic-assisted surgical workflows for conformal bone tumour
-            resection, and an AI-driven TCAD agent for semiconductor device
-            simulation.
+
+          <p className="mt-6 text-base leading-relaxed text-slate-700">
+            I work on performance-aware scientific computing and learning-enabled
+            robotics. I hold the first-class BEng Electronic and Electrical Engineering degree at University College London.
           </p>
-          <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-300">
-            <Tag label="MPhil Scientific Computing · Cambridge" />
-            <Tag label="BEng EEE · UCL (First Class, top 5%)" />
-            <Tag label="Robotics & Embodied Intelligence" />
-            <Tag label="HPC · CUDA · Parallelisation" />
-            <Tag label="AI for Semiconductors & Devices" />
-          </div>
-          <div className="mt-6 flex flex-wrap gap-3 text-xs md:text-sm">
-            <Link
-              href="/research"
-              className="inline-flex items-center rounded-full bg-accent px-4 py-1.5 font-medium text-white"
-            >
-              Research
-            </Link>
-            <Link
-              href="/projects"
-              className="inline-flex items-center rounded-full border border-slate-700 px-4 py-1.5 font-medium text-slate-100 hover:border-accent/70"
-            >
-              Projects
-            </Link>
-            <Link
-              href="/experience"
-              className="inline-flex items-center rounded-full border border-slate-700 px-4 py-1.5 font-medium text-slate-100 hover:border-accent/70"
-            >
-              Experience
-            </Link>
-          </div>
-        </div>
-        <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 md:p-5 text-xs md:text-sm text-slate-300 space-y-3">
-          <h2 className="text-sm md:text-base font-semibold text-slate-50">
-            Snapshot
-          </h2>
-          <ul className="space-y-1.5 list-disc list-inside">
-            <li>
-              MPhil Scientific Computing, High Performance Computing stream,
-              University of Cambridge (Cavendish Laboratory).
-            </li>
-            <li>
-              BEng Electronic and Electrical Engineering, UCL — First Class
-              Honours, GPA 3.98/4.0, ranked in the top 5% of the cohort.
-            </li>
-            <li>
-              Research experience in learning-based control for hexapod
-              robotics, programming-by-demonstration, surgical robotics, and
-              bio-signal driven human–machine interfaces.
-            </li>
-            <li>
-              Industrial experience in AI-driven semiconductor device
-              simulation (HKSTP) and technology infrastructure and automation in
-              banking (Barclays).
-            </li>
-            <li>
-              Active in student representation and community building at both
-              Cambridge and UCL.
-            </li>
-          </ul>
         </div>
       </section>
 
-      <Section title="Selected work" eyebrow="Highlights">
-        <div className="grid gap-4 md:grid-cols-2">
-          <ProjectCard
-            title="Learning-Based Control for Hexapod Robotics"
-            role="Research Assistant · UCL Robot Perception and Learning Lab"
-            timeframe="05/2025–Present"
-            description="Design and implementation of a six-legged robotic platform that integrates nonlinear control and learning-based adaptive policies for terrain-aware gait optimisation."
+      {/* Selected work */}
+      <section className="space-y-4">
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="text-xl font-semibold text-[#0b1f3b] border-b border-slate-200 pb-2">
+            Selected work
+          </h2>
+          <Link
+            href="/projects"
+            className="text-sm font-medium text-slate-600 hover:text-[#0b1f3b] transition"
+          >
+          </Link>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Card
+            title="GPU Acceleration for Scientific Workloads"
+            subtitle="MPhil · Scientific Computing (HPC)"
+            meta="2025–Present"
+            tags={["CUDA", "Performance", "Numerics"]}
             bullets={[
-              "Modelled full kinematics and dynamics of the hexapod using URDF and validated controllers in ROS-based simulation.",
-              "Formulated dynamic locomotion models with learning-augmented policies to maintain stability across uneven surfaces.",
+              "Focus on performance profiling, bottleneck analysis, and kernel-level optimisation.",
+              "Aim for reproducible benchmarking and clean engineering documentation.",
             ]}
-            tags={[
-              "Hexapod Robotics",
-              "Nonlinear Control",
-              "Learning-Based Control",
-              "URDF",
-              "ROS",
-            ]}
+            href="/research"
           />
-          <ProjectCard
+
+          <Card
             title="AI-driven TCAD Agent for Semiconductor Device Simulation"
-            role="Software & AI Engineer · Hong Kong Science and Technology Park"
-            timeframe="07/2025–09/2025"
-            description="Development of an AI-driven TCAD agent that combines retrieval-augmented generation and large language models to automate semiconductor device simulation and optimisation."
+            subtitle="Software & AI Engineer · Hong Kong Science and Technology Park"
+            meta="07/2025–09/2025"
+            tags={["RAG", "Simulation", "Agent Systems"]}
             bullets={[
-              "Constructed a hybrid dense–sparse retrieval pipeline (Qdrant + Ollama embeddings + BM25) for TCAD documentation and query understanding.",
-              "Implemented automated PSIM script generation and self-correction loops from natural-language prompts for MOSFET and nanoscale device simulations.",
+              "Developed an agent workflow for device simulation automation with retrieval + self-correction loops.",
+              "Benchmarked retrieval strategies to improve accuracy and efficiency in engineering workflows.",
             ]}
-            tags={["RAG", "LLMs", "TCAD", "PSIM", "Qdrant"]}
+            href="/experience"
           />
         </div>
-      </Section>
+      </section>
 
-      <Section title="Current interests" eyebrow="Research focus">
-        <p>
-          I am broadly interested in embodied intelligence, high-performance
-          scientific computing, and AI for engineering design. Specific
-          directions include:
-        </p>
-        <ul className="mt-2 space-y-1 list-disc list-inside">
-          <li>
-            Learning-based control and programming-by-demonstration for robotic
-            manipulation and locomotion.
-          </li>
-          <li>
-            Numerical methods and parallel algorithms for large-scale
-            simulations, particularly hyperbolic PDEs and high-resolution
-            shock-capturing schemes.
-          </li>
-          <li>
-            AI-assisted workflows for complex engineering tasks, including
-            semiconductor device modelling and technical-debt management.
-          </li>
-          <li>
-            Human–machine interfaces based on bio-signals and multimodal
-            sensing.
-          </li>
-        </ul>
-      </Section>
+      {/* Short academic-style footer block */}
+      <section className="rounded-xl border border-slate-200 bg-white p-6">
+        <div className="max-w-3xl">
+          <h3 className="text-base font-semibold text-slate-900">
+            Academic interests
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-slate-700">
+            High-performance computing (MPI/OpenMP/CUDA), scientific machine
+            learning, robust perception-and-control pipelines in robotics, and
+            AI-assisted engineering workflows for simulation and design.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link
+              href="/research"
+              className="text-sm font-medium text-[#0b1f3b] hover:underline"
+            >
+              Read research statement →
+            </Link>
+            <Link
+              href="/contact"
+              className="text-sm font-medium text-slate-600 hover:text-[#0b1f3b] transition"
+            >
+              Contact →
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

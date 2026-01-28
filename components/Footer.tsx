@@ -1,11 +1,13 @@
 export function Footer() {
   return (
-    <footer className="border-t border-slate-800 bg-slate-950">
-      <div className="mx-auto max-w-6xl px-4 py-6 text-xs text-slate-400 flex flex-col md:flex-row justify-between gap-2">
-        <p>© {new Date().getFullYear()} Zongmian Wu. All rights reserved.</p>
-        <p>
-          Built with Next.js & Tailwind CSS. Hosted on Vercel.
-        </p>
+    <footer className="border-t border-slate-200 bg-white">
+      <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-slate-500">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Zongmian Wu</p>
+          <p className="text-slate-500">
+            Built with Next.js · Deployed on Vercel
+          </p>
+        </div>
       </div>
     </footer>
   );
