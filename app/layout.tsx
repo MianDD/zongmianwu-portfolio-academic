@@ -1,7 +1,10 @@
+"use client";
+
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { usePathname } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Zongmian Wu | Scientific Computing & Robotics",
@@ -14,22 +17,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+
+  // 👉 这些页面不显示导航栏
+  const hideLayout = pathname === "/unlock";
+
   return (
     <html lang="en">
-      <head>
-        {/* ✅ Google verification */}
-        <meta
-          name="google-site-verification"
-          content="IFUiTpeVTgOEvLHgIZIBHDaY--3ABITDKrGGIk4PFwM"
-        />
-      </head>
-
       <body className="min-h-screen bg-slate-50 text-slate-800 antialiased">
-        <Navbar />
+        
+        {!hideLayout && <Navbar />}
+
         <main className="mx-auto w-full max-w-6xl px-4 pt-20 pb-16">
           {children}
         </main>
-        <Footer />
+
+        {!hideLayout && <Footer />}
       </body>
     </html>
   );
