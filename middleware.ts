@@ -4,7 +4,6 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // 放行这些路径
   if (
     pathname.startsWith("/unlock") ||
     pathname.startsWith("/_next") ||
@@ -23,3 +22,7 @@ export function middleware(request: NextRequest) {
 
   return NextResponse.redirect(new URL("/unlock", request.url));
 }
+
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+};

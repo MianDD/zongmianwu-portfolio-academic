@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import LayoutShell from "@/components/LayoutShell";
 
 export const metadata: Metadata = {
   title: "Zongmian Wu | Scientific Computing & Robotics",
   description:
     "Academic portfolio of Zongmian Wu, MPhil candidate in Scientific Computing (HPC) at the University of Cambridge.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({
@@ -17,11 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-slate-50 text-slate-800 antialiased">
-        <Navbar />
-        <main className="mx-auto w-full max-w-6xl px-4 pt-20 pb-16">
-          {children}
-        </main>
-        <Footer />
+        <LayoutShell>{children}</LayoutShell>
       </body>
     </html>
   );
